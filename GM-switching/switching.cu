@@ -287,7 +287,7 @@ int main(int argc, char** argv){
 		cudaMemcpy(h_Results, d_Results, size_of_subsets, cudaMemcpyDeviceToHost);	//Copy results indicator from GPU back to CPU.
 		cudaDeviceSynchronize();	//Prevents the CPU code from moving on to the next for-loop before the execution on the GPU (and subsequent memory copy) finishes.
 
-		for(i=0; i<BATCH; i++){
+		for(i=0; (i<BATCH) && (i+offset<number_of_subsets) ; i++){
 			if( h_Results[i] == 1 ){	//Found a potential switching set.
 										//Print off the candidate switching set.
 				for(j=0; j<K; j++){
